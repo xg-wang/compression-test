@@ -94,7 +94,7 @@ export default function CompressionTest() {
   return (
     <>
       <section className={styles.card}>
-        <h2>Event Payload</h2>
+        <h2>Test input</h2>
         <form
           onSubmit={(e) => {
             startTest();
