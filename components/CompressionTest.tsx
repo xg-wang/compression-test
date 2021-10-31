@@ -17,7 +17,7 @@ interface TestResult {
 function formatResult(result: TestResult): string {
   return `Test ${result.counter}: average time to compress ${
     result.contentLength
-  } is ${Number(result.averageTime).toPrecision(4)}`;
+  } bytes is ${Number(result.averageTime).toPrecision(4)} ms`;
 }
 
 const States: Readonly<Record<"initial" | "pending" | "finished", TestState>> =
