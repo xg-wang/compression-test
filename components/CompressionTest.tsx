@@ -71,21 +71,22 @@ export default function CompressionTest() {
         `test-start-${testRunCounter}`,
         `test-end-${testRunCounter}`
       );
-      const newHistory = testHistory.concat([
-        {
-          counter: testRunCounter,
-          contentLength: payload.length,
-          averageTime: entry.duration / times,
-        },
-      ]);
       setTestState(States.finished);
       setTestRunCounter(testRunCounter + 1);
-      setTestHistory(newHistory);
+      setTestHistory((testHistory) =>
+        testHistory.concat([
+          {
+            counter: testRunCounter,
+            contentLength: payload.length,
+            averageTime: entry.duration / times,
+          },
+        ])
+      );
     }, 1);
     return () => {
       clearTimeout(timer);
     };
-  }, [testState, testRunCounter, payload, testHistory]);
+  }, [testState, testRunCounter]); // eslint-disable-line
 
   const startTest = () => {
     setTestState(States.pending);
@@ -105,7 +106,9 @@ export default function CompressionTest() {
             Run test
           </button>
           <br />
-          <label htmlFor="payload">Payload for compression test: {payload.length} bytes</label>
+          <label htmlFor="payload">
+            Payload for compression test: {payload.length} bytes
+          </label>
           <br />
           <textarea
             id="payload"
