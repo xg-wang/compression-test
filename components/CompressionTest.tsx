@@ -20,6 +20,8 @@ function formatResult(result: TestResult): string {
   } bytes is ${Number(result.averageTime).toPrecision(4)} ms`;
 }
 
+const TIMES = 1000;
+
 const States: Readonly<Record<"initial" | "pending" | "finished", TestState>> =
   {
     get initial() {
@@ -33,7 +35,7 @@ const States: Readonly<Record<"initial" | "pending" | "finished", TestState>> =
     get pending() {
       return {
         type: "pending",
-        button: "Working...",
+        button: `Running ${TIMES} times...`,
         disabled: true,
         result: "Compressing payload",
       };
@@ -61,8 +63,7 @@ export default function CompressionTest() {
     performance.mark(`test-start-${testRunCounter}`);
     const timer = setTimeout(() => {
       let seq = 1;
-      const times = 1000;
-      while (seq++ <= times) {
+      while (seq++ <= TIMES) {
         gzipSync(new TextEncoder().encode(payload));
       }
       performance.mark(`test-end-${testRunCounter}`);
@@ -78,7 +79,7 @@ export default function CompressionTest() {
           {
             counter: testRunCounter,
             contentLength: payload.length,
-            averageTime: entry.duration / times,
+            averageTime: entry.duration / TIMES,
           },
         ])
       );
@@ -103,7 +104,7 @@ export default function CompressionTest() {
           }}
         >
           <button type="submit" disabled={testState.disabled}>
-            Run test
+            {testState.button}
           </button>
           <br />
           <label htmlFor="payload">
