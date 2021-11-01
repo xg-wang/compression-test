@@ -2,6 +2,11 @@
   "name": "compression-test",
   "version": "1.0.0",
   "private": true,
+  "homepage": "https://compression-test-plum.vercel.app",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/xg-wang/compression-test.git"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
